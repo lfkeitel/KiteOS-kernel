@@ -9,7 +9,6 @@ void main() {
     /* Test the interrupts */
     __asm__ __volatile__("int $2");
     __asm__ __volatile__("int $3");
-    __asm__ __volatile__("int $4");
 
     // /* Fill up the screen */
     // int i = 0;
