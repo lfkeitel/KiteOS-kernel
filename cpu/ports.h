@@ -1,7 +1,7 @@
 #ifndef PORTS_H
 #define PORTS_H
 
-#include "../cpu/types.h"
+#include "types.h"
 
 unsigned char port_byte_read (u16 port);
 void port_byte_write (u16 port, u8 data);
