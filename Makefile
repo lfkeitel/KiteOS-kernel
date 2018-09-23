@@ -6,7 +6,7 @@ OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 # Change this if your cross-compiler is somewhere else
 CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
 # -g: Use debugging symbols in gcc
-CFLAGS = -g
+CFLAGS = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32
 
 # First rule is run by default
 os-image.bin: boot/bootsect.bin kernel.bin
@@ -24,14 +24,13 @@ kernel.elf: boot/kernel_entry.o ${OBJ}
 run: os-image.bin
 	echo "c" | bochs -q
 
-# Open the connection to qemu and load our kernel-object file with symbols
 debug: os-image.bin kernel.elf
 	bochs
 
 # Generic rules for wildcards
 # To make an object, always compile from its .c
 %.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 %.o: %.asm
 	nasm $< -f elf -o $@
