@@ -22,11 +22,11 @@ kernel.elf: boot/kernel_entry.o ${OBJ}
 	i386-elf-ld -o $@ -Ttext 0x1000 $^
 
 run: os-image.bin
-	qemu-system-x86_64 -drive 'file=os-image.bin,index=0,media=disk,format=raw,if=floppy'
+	echo "c" | bochs -q
 
 # Open the connection to qemu and load our kernel-object file with symbols
 debug: os-image.bin kernel.elf
-	bochs 'boot:floppy' 'floppya: 1_44=os-image.bin, status=inserted'
+	bochs
 
 # Generic rules for wildcards
 # To make an object, always compile from its .c

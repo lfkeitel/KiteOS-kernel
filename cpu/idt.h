@@ -1,7 +1,7 @@
 #ifndef IDT_H
 #define IDT_H
 
-#include "types.h"
+#include "type.h"
 
 /* Segment selectors */
 #define KERNEL_CS 0x08
@@ -16,7 +16,7 @@ typedef struct {
      * Bits 6-5: Privilege level of caller (0=kernel..3=user)
      * Bit 4: Set to 0 for interrupt gates
      * Bits 3-0: bits 1110 = decimal 14 = "32 bit interrupt gate" */
-    u8 flags; 
+    u8 flags;
     u16 high_offset; /* Higher 16 bits of handler function address */
 } __attribute__((packed)) idt_gate_t ;
 
