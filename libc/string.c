@@ -1,5 +1,9 @@
 #include "string.h"
+#include "bool_t.h"
 #include <stdint.h>
+
+char lowercase_char(char s);
+char uppercase_char(char s);
 
 /**
  * K&R implementation
@@ -74,4 +78,46 @@ int strcmp(char s1[], char s2[]) {
         if (s1[i] == '\0') return 0;
     }
     return s1[i] - s2[i];
+}
+
+void str_to_lowercase(char s[]) {
+    int i;
+    for (i = 0; s[i] != '\0'; i++) {
+        s[i] = lowercase_char(s[i]);
+    }
+}
+
+void str_to_uppercase(char s[]) {
+    int i;
+    for (i = 0; s[i] != '\0'; i++) {
+        s[i] = uppercase_char(s[i]);
+    }
+}
+
+void str_to_titlecase(char s[]) {
+    bool uppercase = true;
+
+    int i;
+    for (i = 0; s[i] != '\0'; i++) {
+        if (uppercase) {
+            s[i] = uppercase_char(s[i]);
+            uppercase = false;
+        }
+
+        if (s[i] == ' ') uppercase = true;
+    }
+}
+
+char lowercase_char(char s) {
+    if (s >= 0x41 && s <= 0x5A) {
+        return s + 0x20;
+    }
+    return s;
+}
+
+char uppercase_char(char s) {
+    if (s >= 0x61 && s <= 0x7A) {
+        return s - 0x20;
+    }
+    return s;
 }
