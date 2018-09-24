@@ -1,0 +1,16 @@
+{
+    "C_Cpp.dimInactiveRegions": false,
+    "files.associations": {
+        "*.tmpl": "gohtml",
+        ".zsh_aliases": "shellscript",
+        ".zsh_functions": "shellscript",
+        "*.exp": "tcl",
+        "*.js": "javascriptreact",
+        "*.el": "lisp",
+        "*.asm": "asm",
+        "mem.h": "c",
+        "string.h": "c",
+        "stddef.h": "c",
+        "screen.h": "c"
+    }
+}

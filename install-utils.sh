@@ -11,7 +11,7 @@ export PATH="$PREFIX/bin:$PATH"
 mkdir -p /tmp/src
 
 install_pacman_pkgs() {
-    sudo pacman -S gmp mpfr libmpc qemu nasm
+    sudo pacman -S gmp mpfr libmpc bochs nasm
 }
 
 # Build and install binutils
