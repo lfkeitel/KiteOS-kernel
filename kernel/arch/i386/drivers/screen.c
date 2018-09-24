@@ -1,6 +1,6 @@
 #include <kernel/screen.h>
 #include <kernel/ports.h>
-#include <mem.h>
+#include <string.h>
 #include <stdint.h>
 
 /* Declaration of private functions */
@@ -119,8 +119,8 @@ int scroll_screen_buffer(int cursor_offset) {
 
     int i;
     for (i = 1; i < MAX_ROWS; i++) {
-        memory_copy((uint8_t*)get_offset(0, i) + VIDEO_ADDRESS,
-                    (uint8_t*)get_offset(0, i-1) + VIDEO_ADDRESS,
+        memcpy((uint8_t*)get_offset(0, i-1) + VIDEO_ADDRESS,
+                    (uint8_t*)get_offset(0, i) + VIDEO_ADDRESS,
                     MAX_COLS * 2
         );
     }
