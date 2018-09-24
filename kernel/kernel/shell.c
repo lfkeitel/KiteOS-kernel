@@ -1,4 +1,5 @@
 #include <kernel/shell.h>
+#include <kernel/ports.h>
 #include <kernel/memory.h>
 #include <sys/function.h>
 #include <stdio.h>
@@ -6,12 +7,15 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-int shell_exit(char *input);
-int shell_page(char *input);
-int shell_echo(char *input);
-int shell_false(char *input);
-int shell_true(char *input);
-int shell_abort(char *input);
+int shell_exit(char*);
+int shell_page(char*);
+int shell_echo(char*);
+int shell_false(char*);
+int shell_true(char*);
+int shell_abort(char*);
+int shell_test_syscall(char*);
+int shell_shutdown(char*);
+int shell_whoami(char*);
 
 typedef struct { char *key; shell_cmd_t val; } t_symstruct;
 
@@ -22,6 +26,9 @@ static t_symstruct lookuptable[] = {
     { "echo", shell_echo },
     { "true", shell_true },
     { "false", shell_false },
+    { "sc", shell_test_syscall },
+    { "shutdown", shell_shutdown },
+    { "whoami", shell_whoami },
     { "abort", shell_abort }
 };
 
@@ -40,6 +47,11 @@ shell_cmd_t keyfromstring(char *key)
 
 void user_input(char *input) {
     str_to_lowercase(input);
+
+    if (strlen(input) == 0) {
+        puts("> ");
+        return;
+    }
 
     shell_cmd_t cmd = keyfromstring(input);
     if (cmd == 0) {
@@ -99,6 +111,27 @@ int shell_true(char *input) {
 
 int shell_abort(char *input) {
     abort();
+    UNUSED(input);
+    return 0;
+}
+
+int shell_test_syscall(char *input) {
+    asm volatile("int $66");
+    UNUSED(input);
+    return 0;
+}
+
+int shell_whoami(char *input) {
+    puts("groot\n");
+    UNUSED(input);
+    return 0;
+}
+
+int shell_shutdown(char *input) {
+    // NOTE: This is emulator specific and will not work on real hardware
+    for (const char *s = "Shutdown"; *s; ++s) {
+        port_byte_write(0x8900, *s);
+    }
     UNUSED(input);
     return 0;
 }

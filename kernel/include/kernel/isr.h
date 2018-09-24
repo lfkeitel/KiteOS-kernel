@@ -36,6 +36,7 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+extern void isr66(); // syscall
 /* IRQ definitions */
 extern void irq0();
 extern void irq1();
@@ -70,6 +71,8 @@ extern void irq15();
 #define IRQ13 45
 #define IRQ14 46
 #define IRQ15 47
+
+#define SYSCALL_INT 66
 
 /* Struct which aggregates many registers */
 typedef struct {

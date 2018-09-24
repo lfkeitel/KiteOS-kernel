@@ -110,6 +110,8 @@ global irq12
 global irq13
 global irq14
 global irq15
+; syscall
+global isr66
 
 ; 0: Divide By Zero Exception
 isr0:
@@ -376,3 +378,9 @@ irq15:
     push byte 15
     push byte 47
     jmp irq_common_stub
+
+; 66 (0x42) Kernel syscall
+isr66:
+    push byte 0
+    push byte 66
+    jmp isr_common_stub

@@ -3,6 +3,7 @@
 #include <kernel/keyboard.h>
 #include <kernel/timer.h>
 #include <kernel/ports.h>
+#include <sys/function.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -43,6 +44,7 @@ void isr_install() {
     set_idt_gate(29, (uint32_t)isr29);
     set_idt_gate(30, (uint32_t)isr30);
     set_idt_gate(31, (uint32_t)isr31);
+    set_idt_gate(SYSCALL_INT, (uint32_t)isr66); // syscall
 
     // Remap the PIC
     port_byte_write(0x20, 0x11);
@@ -116,7 +118,17 @@ char *exception_messages[] = {
     "Reserved"
 };
 
+void handle_syscall(registers_t *r) {
+    puts("syscall recvd");
+    UNUSED(r);
+}
+
 void isr_handler(registers_t *r) {
+    if (r->int_no == SYSCALL_INT) {
+        handle_syscall(r);
+        return;
+    }
+
     puts("received interrupt: ");
     char s[3];
     int_to_ascii(r->int_no, s);
