@@ -3,6 +3,7 @@
 #include <kernel/keyboard.h>
 #include <kernel/timer.h>
 #include <kernel/ports.h>
+#include <kernel/syscall.h>
 #include <sys/function.h>
 #include <string.h>
 #include <stdio.h>
@@ -117,11 +118,6 @@ char *exception_messages[] = {
     "Reserved",
     "Reserved"
 };
-
-void handle_syscall(registers_t *r) {
-    puts("syscall recvd");
-    UNUSED(r);
-}
 
 void isr_handler(registers_t *r) {
     if (r->int_no == SYSCALL_INT) {

@@ -116,6 +116,7 @@ int shell_abort(char *input) {
 }
 
 int shell_test_syscall(char *input) {
+    asm volatile("mov $0, %%eax" : : : "%eax");
     asm volatile("int $66");
     UNUSED(input);
     return 0;
@@ -128,10 +129,8 @@ int shell_whoami(char *input) {
 }
 
 int shell_shutdown(char *input) {
-    // NOTE: This is emulator specific and will not work on real hardware
-    for (const char *s = "Shutdown"; *s; ++s) {
-        port_byte_write(0x8900, *s);
-    }
+    asm volatile("mov $1, %%eax" : : : "%eax");
+    asm volatile("int $66");
     UNUSED(input);
     return 0;
 }

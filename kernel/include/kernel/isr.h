@@ -87,6 +87,7 @@ void isr_handler(registers_t *r);
 void irq_install();
 
 typedef void (*isr_t)(registers_t*);
+typedef void (*syscall_t)(registers_t*);
 void register_interrupt_handler(uint8_t n, isr_t handler);
 
 #endif
