@@ -1,6 +1,7 @@
 #include <kernel/shell.h>
 #include <kernel/ports.h>
 #include <kernel/memory.h>
+#include <kernel/memory_map.h>
 #include <sys/function.h>
 #include <stdio.h>
 #include <string.h>
@@ -16,6 +17,7 @@ int shell_abort(char*);
 int shell_test_syscall(char*);
 int shell_shutdown(char*);
 int shell_whoami(char*);
+int shell_memory_map(char *input);
 
 typedef struct { char *key; shell_cmd_t val; } t_symstruct;
 
@@ -29,6 +31,7 @@ static t_symstruct lookuptable[] = {
     { "sc", shell_test_syscall },
     { "shutdown", shell_shutdown },
     { "whoami", shell_whoami },
+    { "memmap", shell_memory_map },
     { "abort", shell_abort }
 };
 
@@ -131,6 +134,12 @@ int shell_whoami(char *input) {
 int shell_shutdown(char *input) {
     asm volatile("mov $1, %%eax" : : : "%eax");
     asm volatile("int $66");
+    UNUSED(input);
+    return 0;
+}
+
+int shell_memory_map(char *input) {
+    print_memory_map();
     UNUSED(input);
     return 0;
 }
