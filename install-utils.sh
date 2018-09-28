@@ -11,7 +11,7 @@ export PATH="$PREFIX/bin:$PATH"
 mkdir -p /tmp/src
 
 install_pacman_pkgs() {
-    sudo pacman -S gmp mpfr libmpc bochs nasm
+    sudo pacman -S gmp mpfr libmpc bochs nasm make gcc
 }
 
 # Build and install binutils
@@ -55,11 +55,12 @@ install_gdb() {
 if [ -z "$1" ]; then
     install_binutils
     install_gcc
-    install_gdb
+    # install_gdb
     echo "Please add /usr/local/i386elfgcc/bin to your path"
 fi
 
 case $1 in
+    pacman) install_pacman_pkgs ;;
     binutils) install_binutils ;;
     gcc) install_gcc ;;
     gdb) install_gdb ;;

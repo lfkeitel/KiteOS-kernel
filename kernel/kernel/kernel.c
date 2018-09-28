@@ -8,5 +8,5 @@ void kernel_main() {
 
     clear_screen();
 
-    puts("\nWelcome to KiteOS!\n\n> ");
+    puts("Welcome to KiteOS!\n\n> ");
 }

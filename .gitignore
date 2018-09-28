@@ -6,3 +6,4 @@ bin/
 *.lock
 sysroot/
 .vscode/
+boot/
