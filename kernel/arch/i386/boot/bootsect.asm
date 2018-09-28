@@ -1,3 +1,5 @@
+%define memmap_enable 1
+MEM_MAP_START equ 0x800
 KERNEL_OFFSET equ 0x1000 ; The same one we used when linking the kernel
 STACK_BASE equ 0x9000
 
@@ -7,9 +9,13 @@ STACK_BASE equ 0x9000
     mov ax, 0            ; Ensure extra segment is zero
     mov es, ax
 
-    mov di, 0x800        ; Store memory map at 0x800
+%ifdef memmap_enable
+    mov di, MEM_MAP_START        ; Store memory map at 0x800
     call memory_map      ; Get memory map
-    mov [0x7fe], bp      ; Store record count just before memory map
+    mov [MEM_MAP_START-2], bp      ; Store record count just before memory map
+%else
+    mov byte [MEM_MAP_START-2], 0
+%endif
 
     mov bp, STACK_BASE   ; Setup starting stack
     mov sp, bp
@@ -18,7 +24,9 @@ STACK_BASE equ 0x9000
     call switch_to_pm    ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
     jmp $                ; Never executed
 
+%ifdef memmap_enable
 %include "arch/i386/boot/memory_map.asm"
+%endif
 %include "arch/i386/boot/print.asm"
 %include "arch/i386/boot/print_hex.asm"
 %include "arch/i386/boot/disk.asm"
@@ -47,5 +55,16 @@ BOOT_DRIVE db 0 ; It is a good idea to store it in memory because 'dl' may get o
 MSG_LOAD_KERNEL db "Loading kernel", 0
 
 ; padding
+%ifdef memmap_enable
 times 510 - ($-$$) db 0
+%else
+times 436 - ($-$$) db 0
+
+UID times 10 db 0             ; Unique Disk ID
+PT1 times 16 db 0             ; First Partition Entry
+PT2 times 16 db 0             ; Second Partition Entry
+PT3 times 16 db 0             ; Third Partition Entry
+PT4 times 16 db 0             ; Fourth Partition Entry
+%endif
+
 dw 0xaa55
