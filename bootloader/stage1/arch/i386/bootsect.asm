@@ -25,13 +25,13 @@ STACK_BASE equ 0x9000
     jmp $                ; Never executed
 
 %ifdef memmap_enable
-%include "arch/i386/boot/memory_map.asm"
+%include "arch/i386/memory_map.asm"
 %endif
-%include "arch/i386/boot/print.asm"
-%include "arch/i386/boot/print_hex.asm"
-%include "arch/i386/boot/disk.asm"
-%include "arch/i386/boot/gdt.asm"
-%include "arch/i386/boot/switch_pm.asm"
+%include "arch/i386/print.asm"
+%include "arch/i386/print_hex.asm"
+%include "arch/i386/disk.asm"
+%include "arch/i386/gdt.asm"
+%include "arch/i386/switch_pm.asm"
 
 [bits 16]
 load_kernel:

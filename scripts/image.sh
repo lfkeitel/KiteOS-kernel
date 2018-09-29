@@ -2,6 +2,6 @@
 set -e
 . ./scripts/build.sh
 
-mkdir -p boot
+mkdir -p build
 
-cat sysroot/boot/bootsect.bin sysroot/boot/kernel.bin > boot/os-image.bin
+cat sysroot/boot/stage1.bin sysroot/boot/kernel.bin > build/os-image.bin

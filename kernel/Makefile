@@ -31,9 +31,6 @@ $(LIBS) \
 kernel.bin: $(ARCHDIR)/boot/kernel_entry.o $(OBJ)
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ $(LINK_LIST) --oformat binary
 
-run: os-image.bin
-	echo "c" | bochs -q
-
 %.o: %.c ${HEADERS}
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
@@ -49,7 +46,7 @@ install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
 	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/.
 
-install-kernel: kernel.bin $(ARCHDIR)/boot/bootsect.bin
+install-kernel: kernel.bin
 	mkdir -p $(DESTDIR)$(BOOTDIR)
 	cp $^ $(DESTDIR)$(BOOTDIR)
 
