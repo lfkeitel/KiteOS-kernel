@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
-. ./image.sh
+. ./scripts/image.sh
 
 echo "c" | bochs -q

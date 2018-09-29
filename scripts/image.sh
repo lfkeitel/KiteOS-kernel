@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-. ./build.sh
+. ./scripts/build.sh
 
 mkdir -p boot
 

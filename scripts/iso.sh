@@ -2,7 +2,7 @@
 echo "Not supported at this time"
 exit 1
 set -e
-. ./build.sh
+. ./scripts/build.sh
 
 mkdir -p isodir/boot/grub
 
