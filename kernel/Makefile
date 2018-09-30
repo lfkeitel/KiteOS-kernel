@@ -51,5 +51,5 @@ install-kernel: kernel.bin
 	cp $^ $(DESTDIR)$(BOOTDIR)
 
 clean:
-	rm -rf *.bin arch/*/boot/*.bin
-	rm -rf *.o */*.o */*/*.o */*/*/*.o
+	find . -name '*.bin' -delete
+	find . -name '*.o' -delete

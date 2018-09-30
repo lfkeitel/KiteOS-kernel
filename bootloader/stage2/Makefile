@@ -9,16 +9,17 @@ BOOTDIR?=$(EXEC_PREFIX)/boot
 
 ARCHDIR=arch/$(HOSTARCH)
 
-all: $(ARCHDIR)/stage1.bin
+all: $(ARCHDIR)/stage2.bin
 
 %.bin: %.asm
-	set -e ;\
-	SECTORS=$$(($$(stat -c %s ../stage2/$(ARCHDIR)/stage2.bin)/512)) ;\
-	nasm $< -f bin -o $@ -dstage2_sect_count=$$SECTORS
+	nasm $< -f bin -o $@.stub
+	cp $@.stub $@
+	head -c $$(((512-$$(stat -c %s $@.stub)%512)%512)) /dev/zero >> $@
+	rm $@.stub
 
 install: install-bootloader
 
-install-bootloader: $(ARCHDIR)/stage1.bin
+install-bootloader: $(ARCHDIR)/stage2.bin
 	mkdir -p $(DESTDIR)$(BOOTDIR)
 	cp $< $(DESTDIR)$(BOOTDIR)
 

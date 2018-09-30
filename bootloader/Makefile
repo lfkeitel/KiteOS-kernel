@@ -9,21 +9,23 @@ BOOTDIR?=$(EXEC_PREFIX)/boot
 
 ARCHDIR=arch/$(HOSTARCH)
 
-STAGES=stage1# stage2
+STAGES=stage2 stage1
+STAGESCLEAN=$(addsuffix clean, $(STAGES))
+STAGESINSTALL=$(addsuffix install, $(STAGES))
 
-.PHONY: $(STAGES)
+.PHONY: $(STAGES) clean install
 
 all: $(STAGES)
 
 $(STAGES):
 	$(MAKE) -C $@
 
-install: install-$(STAGES)
+install: $(STAGESINSTALL)
 
-install-$(STAGES): $(STAGES)
-	$(MAKE) -C $< install
+%install:
+	$(MAKE) -C $* install
 
-clean: clean-$(STAGES)
+clean: $(STAGESCLEAN)
 
-clean-$(STAGES): $(STAGES)
-	$(MAKE) -C $< clean
+%clean:
+	$(MAKE) -C $* clean

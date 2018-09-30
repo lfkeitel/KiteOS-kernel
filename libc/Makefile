@@ -1,5 +1,5 @@
 DEFAULT_HOST!=../scripts/default-host.sh
-HOST?=DEFAULT_HOST
+HOST?=$(DEFAULT_HOST)
 HOSTARCH!=../scripts/target-triplet-to-arch.sh $(HOST)
 
 CFLAGS?=-O2 -g
@@ -70,9 +70,8 @@ libk.a: $(LIBK_OBJS)
 	$(CC) -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
 
 clean:
-	rm -f $(BINARIES) *.a
-	rm -f $(OBJS) $(LIBK_OBJS) *.o */*.o */*/*.o
-	rm -f $(OBJS:.o=.d) $(LIBK_OBJS:.o=.d) *.d */*.d */*/*.d
+	find . -name '*.a' -delete
+	find . -name '*.o' -delete
 
 install: install-headers install-libs
 

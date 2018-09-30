@@ -19,4 +19,8 @@ init_pm: ; we are now using 32-bit instructions
     mov ebp, 0x90000 ; 6. update the stack right at the top of the free space
     mov esp, ebp
 
-    call BEGIN_PM ; 7. Call a well-known label with useful code
+    call begin_pm ; 7. Call a well-known label with useful code
+
+begin_pm:
+    call KERNEL_OFFSET ; Give control to the kernel
+    jmp $ ; Stay here when the kernel returns control to us (if ever)

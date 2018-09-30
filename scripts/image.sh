@@ -4,4 +4,10 @@ set -e
 
 mkdir -p build
 
-cat sysroot/boot/stage1.bin sysroot/boot/kernel.bin > build/os-image.bin
+FILES=(
+    sysroot/boot/stage1.bin
+    sysroot/boot/stage2.bin
+    sysroot/boot/kernel.bin
+)
+
+cat ${FILES[@]} > build/os-image.bin
