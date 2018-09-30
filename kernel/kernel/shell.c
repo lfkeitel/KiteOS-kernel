@@ -17,22 +17,25 @@ int shell_abort(char*);
 int shell_test_syscall(char*);
 int shell_shutdown(char*);
 int shell_whoami(char*);
-int shell_memory_map(char *input);
+int shell_memory_map(char*);
+int shell_help(char*);
 
 typedef struct { char *key; shell_cmd_t val; } t_symstruct;
 
 static t_symstruct lookuptable[] = {
-    { "exit", shell_exit },
-    { "end", shell_exit },
-    { "page", shell_page },
+    { "abort", shell_abort },
     { "echo", shell_echo },
-    { "true", shell_true },
+    { "end", shell_exit },
+    { "exit", shell_exit },
     { "false", shell_false },
+    { "help", shell_help },
+    { "logout", shell_shutdown },
+    { "memmap", shell_memory_map },
+    { "page", shell_page },
     { "sc", shell_test_syscall },
     { "shutdown", shell_shutdown },
-    { "whoami", shell_whoami },
-    { "memmap", shell_memory_map },
-    { "abort", shell_abort }
+    { "true", shell_true },
+    { "whoami", shell_whoami }
 };
 
 #define NKEYS (int)(sizeof(lookuptable)/sizeof(t_symstruct))
@@ -140,6 +143,16 @@ int shell_shutdown(char *input) {
 
 int shell_memory_map(char *input) {
     print_memory_map();
+    UNUSED(input);
+    return 0;
+}
+
+int shell_help(char *input) {
+    puts("Available Commands:\n");
+    for (int i = 0; i < NKEYS; i++) {
+        t_symstruct sym = lookuptable[i];
+        printf("  %s\n", sym.key);
+    }
     UNUSED(input);
     return 0;
 }
