@@ -38,9 +38,9 @@ bootloader:
     mov dl, [BOOT_DRIVE]         ; Give stage 2 the same boot drive
     jmp 0:STAGE2_ADDR            ; Hand the reins to stage 2
 
-%include "arch/i386/print.asm"
-%include "arch/i386/print_hex.asm"
-%include "arch/i386/disk.asm"
+%include "arch/i686/print.asm"
+%include "arch/i686/print_hex.asm"
+%include "arch/i686/disk.asm"
 
 load_stage2:
     mov bx, MSG_LOAD_STAGE2

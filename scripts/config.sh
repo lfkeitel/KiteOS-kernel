@@ -17,7 +17,7 @@ export INCLUDEDIR=$PREFIX/include
 export CFLAGS='-O2 -g'
 export CPPFLAGS=''
 
-libgcc="$(dirname -- "$(i386-elf-gcc -print-libgcc-file-name)")"
+libgcc="$(dirname -- "$(i686-elf-gcc -print-libgcc-file-name)")"
 # Configure the cross-compiler to use the desired system root.
 export SYSROOT="$(pwd)/sysroot"
 export CC="$CC --sysroot=$SYSROOT"

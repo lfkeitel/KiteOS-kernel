@@ -5,7 +5,7 @@
 %define kern_sect_num 31
 %endif
 
-%include "arch/i386/bios_interrupts.asm"
+%include "arch/i686/bios_interrupts.asm"
 
 MEM_MAP_START equ 0x800
 KERNEL_OFFSET equ 0x1000 ; The same one we used when linking the kernel
@@ -37,12 +37,12 @@ load_kernel:
     call disk_load
     ret
 
-%include "arch/i386/memory_map.asm"
-%include "arch/i386/print.asm"
-%include "arch/i386/print_hex.asm"
-%include "arch/i386/disk.asm"
-%include "arch/i386/gdt.asm"
-%include "arch/i386/switch_pm.asm"
+%include "arch/i686/memory_map.asm"
+%include "arch/i686/print.asm"
+%include "arch/i686/print_hex.asm"
+%include "arch/i686/disk.asm"
+%include "arch/i686/gdt.asm"
+%include "arch/i686/switch_pm.asm"
 
 BOOT_DRIVE db 0 ; It is a good idea to store it in memory because 'dl' may get overwritten
 MSG_LOAD_KERNEL db "Loading kernel", 0
