@@ -29,7 +29,7 @@ $(LDFLAGS) \
 $(LIBS) \
 
 kernel.bin: $(ARCHDIR)/boot/kernel_entry.o $(OBJ)
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ $(LINK_LIST) --oformat binary
+	$(HOST)-ld -o $@ -Ttext 0x1000 $^ $(LINK_LIST) --oformat binary
 
 %.o: %.c ${HEADERS}
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
