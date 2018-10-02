@@ -19,6 +19,7 @@ int shell_shutdown(char*);
 int shell_whoami(char*);
 int shell_memory_map(char*);
 int shell_help(char*);
+int shell_malloc_test(char*);
 
 typedef struct { char *key; shell_cmd_t val; } t_symstruct;
 
@@ -35,6 +36,7 @@ static t_symstruct lookuptable[] = {
     { "sc", shell_test_syscall },
     { "shutdown", shell_shutdown },
     { "true", shell_true },
+    { "kmalloc", shell_malloc_test },
     { "whoami", shell_whoami }
 };
 
@@ -90,18 +92,38 @@ int shell_exit(char *input) {
     return 0;
 }
 
-int shell_page(char *input) {
-    uint32_t phys_addr;
-    uint32_t page = kmalloc(1000, 1, &phys_addr);
+void print_page_info(size_t addr) {
     char page_str[16] = "";
-    hex_to_ascii(page, page_str);
+    hex_to_ascii((size_t)ADDR_TO_PAGE(addr), page_str);
+
     char phys_str[16] = "";
-    hex_to_ascii(phys_addr, phys_str);
-    puts("Page: ");
-    puts(page_str);
-    puts(", physical address: ");
-    puts(phys_str);
+    hex_to_ascii(addr, phys_str);
+
+    printf("Page: %s, physical address: %s\n", page_str, phys_str);
+}
+
+int shell_page(char *input) {
     UNUSED(input);
+
+    size_t phys_addr = (size_t)mem_req_pages(1);
+    if (phys_addr == 0) {
+        puts("Failed to allocate memory");
+        return 0;
+    }
+
+    print_page_info(phys_addr);
+
+    puts("Freeing page\n");
+    mem_free_page((void*)phys_addr);
+
+    phys_addr = (size_t)mem_req_pages(1);
+    if (phys_addr == 0) {
+        puts("Failed to allocate memory");
+        return 0;
+    }
+
+    print_page_info(phys_addr);
+
     return 0;
 }
 
@@ -154,5 +176,25 @@ int shell_help(char *input) {
         printf("  %s\n", sym.key);
     }
     UNUSED(input);
+    return 0;
+}
+
+int shell_malloc_test(char *input) {
+    UNUSED(input);
+    char *test1 = (char*) kmalloc(10);
+    char *test2 = (char*) kmalloc(16);
+    char *test3 = (char*) kmalloc(20);
+
+    char phys_str[16] = "";
+    hex_to_ascii((size_t) test1, phys_str);
+    printf("test1: %s\n", phys_str);
+
+    memset(phys_str, 0, sizeof(phys_str));
+    hex_to_ascii((size_t) test2, phys_str);
+    printf("test2: %s\n", phys_str);
+
+    memset(phys_str, 0, sizeof(phys_str));
+    hex_to_ascii((size_t) test3, phys_str);
+    printf("test3: %s\n", phys_str);
     return 0;
 }

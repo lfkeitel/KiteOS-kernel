@@ -3,32 +3,25 @@
 #include <string.h>
 #include <stdio.h>
 
-void print_memory_map() {
-    uint16_t mem_table_len = *((uint16_t*) 0x7fe);
-    memory_map_t *mem_map = (memory_map_t*) 0x800;
+memory_map_t *mem_map = (memory_map_t*) MEMORY_MAP_ADDR;
 
+void print_memory_map() {
     char buff[19];
-    int_to_ascii(mem_table_len, buff);
-    puts("Number of entries: ");
-    puts(buff);
-    putchar('\n');
+    int_to_ascii(mem_map->length, buff);
+    printf("Number of entries: %s\n", buff);
     buff[0] = 0;
 
-    for (int i = 0; i < mem_table_len; i++) {
-        hex_to_ascii(mem_map[i].base, buff);
-        puts(buff);
-        puts(" + ");
+    for (int i = 0; i < mem_map->length; i++) {
+        hex_to_ascii(mem_map->entries[i].base, buff);
+        printf("%s + ", buff);
         buff[0] = 0;
 
-        hex_to_ascii(mem_map[i].length, buff);
-        puts(buff);
+        hex_to_ascii(mem_map->entries[i].length, buff);
+        printf(buff);
         buff[0] = 0;
 
-        puts(" | Type: ");
-        hex_to_ascii(mem_map[i].type, buff);
-        puts(buff);
+        hex_to_ascii(mem_map->entries[i].type, buff);
+        printf(" | Type: %s\n", buff);
         buff[0] = 0;
-
-        putchar('\n');
     }
 }

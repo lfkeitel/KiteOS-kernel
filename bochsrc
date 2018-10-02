@@ -1,2 +1,3 @@
 floppya: 1_44=build/os-image.bin, status=inserted
 boot: floppy
+megs: 256

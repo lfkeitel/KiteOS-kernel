@@ -2,7 +2,7 @@
 %define disk_sect_start 3
 %endif
 %ifndef kern_sect_num
-%define kern_sect_num 31
+%define kern_sect_num 50
 %endif
 
 %include "arch/i686/bios_interrupts.asm"
@@ -14,11 +14,11 @@ STACK_BASE equ 0x9000
 [org 0x7c00]
     mov [BOOT_DRIVE], dl ; Remember that the BIOS sets us the boot drive in 'dl' on boot
 
-    mov di, MEM_MAP_START        ; Store memory map at 0x800
-    call memory_map              ; Get memory map
-    mov [MEM_MAP_START-2], bp    ; Store record count just before memory map
+    mov di, MEM_MAP_START+2     ; Store memory map entries at 0x802
+    call memory_map             ; Get memory map
+    mov [MEM_MAP_START], bp     ; Store record count before entries
 
-    mov bp, STACK_BASE   ; Setup starting stack
+    mov bp, STACK_BASE          ; Setup starting stack
     mov sp, bp
 
     call load_kernel     ; read the kernel from disk
