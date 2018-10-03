@@ -1,7 +1,7 @@
-#include <kernel/shell.h>
-#include <kernel/ports.h>
-#include <kernel/memory.h>
-#include <kernel/memory_map.h>
+#include <kiteos/shell.h>
+#include <kiteos/ports.h>
+#include <kiteos/memory.h>
+#include <kiteos/memory_map.h>
 #include <sys/function.h>
 #include <stdio.h>
 #include <string.h>

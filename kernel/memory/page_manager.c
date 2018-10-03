@@ -1,4 +1,4 @@
-#include <kernel/memory.h>
+#include <kiteos/memory.h>
 #include <stdint.h>
 
 // 32 bytes = 256 pages monitoring = 1 MB

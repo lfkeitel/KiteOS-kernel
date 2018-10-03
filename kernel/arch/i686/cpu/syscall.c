@@ -1,6 +1,6 @@
-#include <kernel/isr.h>
-#include <kernel/ports.h>
-#include <kernel/syscall.h>
+#include <kiteos/isr.h>
+#include <kiteos/ports.h>
+#include <kiteos/syscall.h>
 #include <sys/function.h>
 #include <string.h>
 #include <stdio.h>

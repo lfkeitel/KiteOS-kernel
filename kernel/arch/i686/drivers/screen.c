@@ -1,5 +1,5 @@
-#include <kernel/screen.h>
-#include <kernel/ports.h>
+#include <kiteos/screen.h>
+#include <kiteos/ports.h>
 #include <string.h>
 #include <stdint.h>
 

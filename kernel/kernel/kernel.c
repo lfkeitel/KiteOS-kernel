@@ -1,6 +1,6 @@
-#include <kernel/isr.h>
-#include <kernel/screen.h>
-#include <kernel/memory.h>
+#include <kiteos/isr.h>
+#include <kiteos/screen.h>
+#include <kiteos/memory.h>
 #include <stdio.h>
 
 void kernel_main() {

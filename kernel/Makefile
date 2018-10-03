@@ -20,8 +20,8 @@ LIBS:=$(LIBS) -nostdlib -lk -lgcc
 
 ARCHDIR=arch/$(HOSTARCH)
 
-C_SOURCES = $(wildcard kernel/*.c memory/*.c $(ARCHDIR)/drivers/*.c $(ARCHDIR)/cpu/*.c)
-HEADERS = $(wildcard include/kernel/*.h)
+C_SOURCES = $(wildcard kiteos/*.c memory/*.c $(ARCHDIR)/drivers/*.c $(ARCHDIR)/cpu/*.c)
+HEADERS = $(wildcard include/kiteos/*.h)
 OBJ = ${C_SOURCES:.c=.o $(ARCHDIR)/cpu/interrupt.o}
 
 LINK_LIST = \

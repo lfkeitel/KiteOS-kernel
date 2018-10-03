@@ -1,9 +1,9 @@
-#include <kernel/isr.h>
-#include <kernel/idt.h>
-#include <kernel/keyboard.h>
-#include <kernel/timer.h>
-#include <kernel/ports.h>
-#include <kernel/syscall.h>
+#include <kiteos/isr.h>
+#include <kiteos/idt.h>
+#include <kiteos/keyboard.h>
+#include <kiteos/timer.h>
+#include <kiteos/ports.h>
+#include <kiteos/syscall.h>
 #include <sys/function.h>
 #include <string.h>
 #include <stdio.h>

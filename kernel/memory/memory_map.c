@@ -1,4 +1,4 @@
-#include <kernel/memory_map.h>
+#include <kiteos/memory_map.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>

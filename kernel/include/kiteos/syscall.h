@@ -1,7 +1,7 @@
 #ifndef SYSCALL_H
 #define SYSCALL_H
 
-#include <kernel/isr.h>
+#include <kiteos/isr.h>
 
 #define MAX_SYSCALL 1
 

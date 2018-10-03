@@ -1,4 +1,4 @@
-#include <kernel/memory.h>
+#include <kiteos/memory.h>
 #include <sys/function.h>
 #include <stdint.h>
 #include <stdio.h>

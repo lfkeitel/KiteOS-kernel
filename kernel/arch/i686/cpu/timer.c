@@ -1,6 +1,6 @@
-#include <kernel/timer.h>
-#include <kernel/isr.h>
-#include <kernel/ports.h>
+#include <kiteos/timer.h>
+#include <kiteos/isr.h>
+#include <kiteos/ports.h>
 #include <sys/function.h>
 
 uint32_t tick = 0;

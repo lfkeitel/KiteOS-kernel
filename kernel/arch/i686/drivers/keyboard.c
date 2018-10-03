@@ -1,8 +1,8 @@
-#include <kernel/keyboard.h>
-#include <kernel/ports.h>
-#include <kernel/isr.h>
-#include <kernel/screen.h>
-#include <kernel/shell.h>
+#include <kiteos/keyboard.h>
+#include <kiteos/ports.h>
+#include <kiteos/isr.h>
+#include <kiteos/screen.h>
+#include <kiteos/shell.h>
 #include <sys/function.h>
 #include <string.h>
 #include <stdbool.h>

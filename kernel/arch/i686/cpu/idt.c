@@ -1,5 +1,5 @@
-#include <kernel/idt.h>
-#include <kernel/type.h>
+#include <kiteos/idt.h>
+#include <kiteos/type.h>
 
 void set_idt_gate(int n, uint32_t handler) {
     idt[n].low_offset = low_16(handler);
