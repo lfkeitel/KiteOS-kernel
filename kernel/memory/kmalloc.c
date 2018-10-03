@@ -8,7 +8,6 @@ int alloc_new_page();
 
 typedef struct header_t header_t;
 struct header_t {
-    size_t sector;
     size_t length;
     uint8_t used;
     header_t *next;
@@ -33,7 +32,6 @@ int init_kern_mem() {
     }
 
     header_t *header = (header_t*) init_page;
-    header->sector = 1;
     header->length = PAGE_SIZE - sizeof(header_t);
     header->used = 0;
     header->next = NULL;
@@ -75,7 +73,6 @@ try_again:
 
         // Create new header after allocated space
         header_t *new_header = (header_t*)(mem + sizeof(header_t) + size);
-        new_header->sector = header->sector;
         new_header->length = old_length - sizeof(header_t);
         new_header->used = 0;
         new_header->next = header->next;
@@ -122,13 +119,28 @@ int alloc_new_page(size_t size) {
     }
 
     header_t *header = (header_t*) init_page;
-    header->sector = 1;
     header->length = (num_pages * PAGE_SIZE) - sizeof(header_t);
     header->used = 0;
     header->next = NULL;
-    header->last = NULL;
 
+    header->last = end_header;
     end_header->next = header;
     end_header = header;
     return 0;
+}
+
+void kfree(void *ptr) {
+    header_t *header = ptr - sizeof(header_t);
+    header->used = 0;
+
+    if (rand() % 100 <= 10) {
+        cleanup_heap();
+    }
+}
+
+void cleanup_heap() {
+    // TODO: Consolidate consecutive memory regions
+    // Be cautious of non-consecutive pages. Headers can only span consecutive
+    // pages otherwise memory will not be in our page space.
+    // Also, should order headers unless this is done when a new page is allocated.
 }

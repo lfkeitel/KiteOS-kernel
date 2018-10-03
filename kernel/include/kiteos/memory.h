@@ -18,6 +18,7 @@
 
 
 void* kmalloc(size_t size);
+void kfree(void *ptr);
 
 void* mem_req_pages(int pages);
 void mem_free_page(void *addr);

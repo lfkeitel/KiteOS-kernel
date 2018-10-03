@@ -22,7 +22,10 @@ int shell_help(char*);
 int shell_malloc_test(char*);
 int shell_random(char*);
 
-typedef struct { char *key; shell_cmd_t val; } t_symstruct;
+typedef struct {
+    char *key;
+    shell_cmd_t val;
+} t_symstruct;
 
 static t_symstruct lookuptable[] = {
     { "abort", shell_abort },
@@ -31,14 +34,14 @@ static t_symstruct lookuptable[] = {
     { "exit", shell_exit },
     { "false", shell_false },
     { "help", shell_help },
+    { "kmalloc", shell_malloc_test },
     { "logout", shell_shutdown },
     { "memmap", shell_memory_map },
     { "page", shell_page },
+    { "random", shell_random },
     { "sc", shell_test_syscall },
     { "shutdown", shell_shutdown },
     { "true", shell_true },
-    { "kmalloc", shell_malloc_test },
-    { "random", shell_random },
     { "whoami", shell_whoami }
 };
 
@@ -198,6 +201,30 @@ int shell_malloc_test(char *input) {
     memset(phys_str, 0, sizeof(phys_str));
     hex_to_ascii((size_t) test3, phys_str);
     printf("test3: %s\n", phys_str);
+
+    kfree(test1);
+
+    test1 = (char*) kmalloc(10);
+
+    memset(phys_str, 0, sizeof(phys_str));
+    hex_to_ascii((size_t) test1, phys_str);
+    printf("test1 after kfree: %s\n", phys_str);
+
+    kfree(test1);
+
+    test1 = (char*) kmalloc(8);
+
+    memset(phys_str, 0, sizeof(phys_str));
+    hex_to_ascii((size_t) test1, phys_str);
+    printf("test1 after kfree: %s\n", phys_str);
+
+    kfree(test1);
+
+    test1 = (char*) kmalloc(10);
+
+    memset(phys_str, 0, sizeof(phys_str));
+    hex_to_ascii((size_t) test1, phys_str);
+    printf("test1 after kfree: %s\n", phys_str);
     return 0;
 }
 
@@ -207,6 +234,12 @@ int shell_random(char *input) {
 
     char str[12] = "";
     int_to_ascii(r, str);
+    puts(str);
+    putchar('\n');
+
+    int r2 = rand() % 100;
+    memset(str, 0, sizeof(str));
+    int_to_ascii(r2, str);
     puts(str);
     putchar('\n');
     return 0;
