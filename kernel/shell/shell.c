@@ -225,6 +225,14 @@ int shell_malloc_test(char *input) {
     memset(phys_str, 0, sizeof(phys_str));
     hex_to_ascii((size_t) test1, phys_str);
     printf("test1 after kfree: %s\n", phys_str);
+
+    memset(test2, 0, 16);
+    hex_to_ascii((size_t) test2, test2);
+    printf("test2 storing its own address: %s\n", test2);
+
+    kfree(test1);
+    kfree(test2);
+    kfree(test3);
     return 0;
 }
 

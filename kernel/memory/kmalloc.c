@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 int alloc_new_page();
+void cleanup_heap();
 
 typedef struct header_t header_t;
 struct header_t {
@@ -12,7 +13,7 @@ struct header_t {
     uint8_t used;
     header_t *next;
     header_t *last;
-} __attribute((packed));
+};
 
 static header_t *start_header;
 static header_t *end_header;
@@ -65,6 +66,7 @@ try_again:
             return (void*)((char*)header) + sizeof(header_t);
         }
 
+        // TODO: Align headers/segments on correct byte boundaries
         // There's enough space to make a new header so let's split this segment
         header->length = size;
 
