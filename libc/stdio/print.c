@@ -5,7 +5,7 @@
 #include <string.h>
 
 #if defined(__is_libk)
-#include <kernel/screen.h>
+#include <kiteos/screen.h>
 #endif
 
 int puts(const char* string) {

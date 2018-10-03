@@ -20,6 +20,7 @@ int shell_whoami(char*);
 int shell_memory_map(char*);
 int shell_help(char*);
 int shell_malloc_test(char*);
+int shell_random(char*);
 
 typedef struct { char *key; shell_cmd_t val; } t_symstruct;
 
@@ -37,6 +38,7 @@ static t_symstruct lookuptable[] = {
     { "shutdown", shell_shutdown },
     { "true", shell_true },
     { "kmalloc", shell_malloc_test },
+    { "random", shell_random },
     { "whoami", shell_whoami }
 };
 
@@ -196,5 +198,16 @@ int shell_malloc_test(char *input) {
     memset(phys_str, 0, sizeof(phys_str));
     hex_to_ascii((size_t) test3, phys_str);
     printf("test3: %s\n", phys_str);
+    return 0;
+}
+
+int shell_random(char *input) {
+    UNUSED(input);
+    int r = rand();
+
+    char str[12] = "";
+    int_to_ascii(r, str);
+    puts(str);
+    putchar('\n');
     return 0;
 }

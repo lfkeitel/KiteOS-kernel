@@ -10,6 +10,11 @@ extern "C" {
 __attribute__((__noreturn__))
 void abort(void);
 
+#define RAND_MAX 2147483647
+
+int rand();
+void srand(unsigned seed);
+
 #ifdef __cplusplus
 }
 #endif
